@@ -42,6 +42,7 @@
   "dependencies": {
     "mazzaroth-js": "develop",
     "mazzaroth-xdr": "develop",
+    "package-tagger": "^0.1.2",
     "xdr-js-serialize": "0.1.0-dev.b8020e011c"
   }
 }
