@@ -48,6 +48,10 @@ testCmd.action(async function (options) {
         return
       }
       for (let i = 0; i < items.length; i++) {
+        // ignore . files
+        if (items[i][0] === '.') {
+          continue
+        }
         const fullPath = path.join(configPath, items[i])
         console.log('----------------------------------')
         console.log(`Running test config ${fullPath}`)

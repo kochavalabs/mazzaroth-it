@@ -13,6 +13,7 @@
     "build": "npm run lint && babel src -d dist",
     "cli": "npm run build && node ./dist/main.js",
     "clid": "npm run build && env DEBUG='mazzaroth*' node ./dist/main.js",
+    "test": "npm run cli test",
     "lint": "./node_modules/.bin/eslint ."
   },
   "repository": {
@@ -40,6 +41,7 @@
     "eslint-plugin-standard": "^4.0.0"
   },
   "dependencies": {
+    "commander": "^5.1.0",
     "mazzaroth-js": "develop",
     "mazzaroth-xdr": "develop",
     "xdr-js-serialize": "0.1.0-dev.b8020e011c"
