@@ -32,7 +32,6 @@ jobs:
       - run:
           name: Lint
           command: npm run lint
-          command: npm publish --tag develop
 
 workflows:
   version: 2
