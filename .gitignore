@@ -1,9 +1,4 @@
 node_modules/
 dist/
 data/
-types.js
-XchngContract.json
-src/types.js
-types/
 mazzaroth
-xchng.wasm
