@@ -14,7 +14,7 @@
     "cli": "npm run build && node ./dist/main.js",
     "clid": "npm run build && env DEBUG='mazzaroth*' node ./dist/main.js",
     "test": "npm run cli test",
-    "lint": "./node_modules/.bin/eslint . && ./node_modules/markdownlint-cli/markdownlint.js README.md"
+    "lint": "./node_modules/.bin/eslint ."
   },
   "repository": {
     "type": "git",
@@ -42,10 +42,9 @@
     "markdownlint-cli": "^0.23.1"
   },
   "dependencies": {
-    "app-module-path": "^2.2.0",
     "commander": "^5.1.0",
-    "mazzaroth-js": "^0.2.6",
-    "mazzaroth-xdr": "^0.2.5",
-    "xdr-js-serialize": "^0.2.0"
+    "mazzaroth-js": "develop",
+    "mazzaroth-xdr": "develop",
+    "xdr-js-serialize": "0.1.0-dev.b8020e011c"
   }
 }
