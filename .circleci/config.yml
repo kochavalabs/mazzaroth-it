@@ -32,6 +32,22 @@ jobs:
       - run:
           name: Lint
           command: npm run lint
+  publish-dev:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - restore_cache:
+          key: git-sha-{{ .Revision }}
+      - run:
+          name: Set Develop Version
+          command: git rev-parse develop | cut -c1-10 | xargs -I[] ./node_modules/package-tagger/index.js dev.[]
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
+      - run:
+          name: Publish package
+          command: npm publish --tag develop
 
 workflows:
   version: 2
@@ -41,3 +57,10 @@ workflows:
       - test:
           requires:
             - build
+      - publish-dev:
+          requires:
+            - build
+            - test
+          filters:
+            branches:
+              only: develop
