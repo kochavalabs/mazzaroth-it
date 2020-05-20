@@ -45,6 +45,7 @@
     "commander": "^5.1.0",
     "mazzaroth-js": "develop",
     "mazzaroth-xdr": "develop",
-    "xdr-js-serialize": "0.1.0-dev.b8020e011c"
+    "package-tagger": "^0.1.2",
+    "xdr-js-serialize": "develop"
   }
 }
