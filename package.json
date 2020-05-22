@@ -42,6 +42,7 @@
     "package-tagger": "^0.1.2"
   },
   "dependencies": {
+    "app-module-path": "^2.2.0",
     "commander": "^5.1.0",
     "mazzaroth-js": "develop",
     "mazzaroth-xdr": "develop",
