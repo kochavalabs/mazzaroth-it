@@ -5,6 +5,7 @@ import fs from 'fs'
 import { execFile } from 'child_process'
 import path from 'path'
 import assert from 'assert'
+require('app-module-path').addPath(path.resolve(`${__dirname}/../node_modules`))
 
 const defaultChannel = '0'.repeat(64)
 const defaultSender = '0'.repeat(64)
