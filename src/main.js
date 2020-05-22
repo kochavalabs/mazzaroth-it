@@ -8,8 +8,6 @@ import path from 'path'
 import assert from 'assert'
 require('app-module-path').addPath(path.resolve(`${__dirname}/../node_modules`))
 
-const runCmd = util.promisify(exec)
-
 const defaultChannel = '0'.repeat(64)
 const defaultSender = '0'.repeat(64)
 const defaultOwner = '3b6a27bcceb6a42d62a3a8d02a6f0d73653215771de243a63ac048a18b59da29'
