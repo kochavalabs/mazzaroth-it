@@ -41,6 +41,7 @@
     "eslint-plugin-standard": "^4.0.0"
   },
   "dependencies": {
+    "app-module-path": "^2.2.0",
     "commander": "^5.1.0",
     "mazzaroth-js": "develop",
     "mazzaroth-xdr": "develop",
