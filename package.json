@@ -46,7 +46,6 @@
     "commander": "^5.1.0",
     "mazzaroth-js": "develop",
     "mazzaroth-xdr": "develop",
-    "package-tagger": "^0.1.2",
     "xdr-js-serialize": "develop"
   }
 }
