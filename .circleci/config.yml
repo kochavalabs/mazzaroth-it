@@ -42,11 +42,12 @@ jobs:
       - restore_cache:
           key: git-sha-{{ .Revision }}{{ .Branch }}
       - run:
-          name: lint js
+          name: lint
           command: npm run lint
       - run:
-          name: Test
+          name: test
           command: npm test
+
   publish-dev:
     executor: node-latest
     steps:
@@ -90,10 +91,10 @@ jobs:
       - run:
           name: tag release
           command: |
-            export GIT_TAG=$(echo $CIRCLE_BRANCH | sed 's:release/::')
+            env GIT_TAG=$(echo $CIRCLE_BRANCH | sed 's:release/::')
             git checkout master
             git tag $GIT_TAG
-            git push origin $GIT_TAG
+            git push --set-upstream origin $GIT_TAG
       - run:
           name: publish package
           command: npm publish --tag latest
