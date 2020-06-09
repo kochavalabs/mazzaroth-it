@@ -1,6 +1,6 @@
 {
   "name": "mazzaroth-it",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Tool that helps with integration testing of mazzaroth contracts.",
   "main": "dist/main.js",
   "files": [
@@ -44,8 +44,8 @@
   "dependencies": {
     "app-module-path": "^2.2.0",
     "commander": "^5.1.0",
-    "mazzaroth-js": "develop",
-    "mazzaroth-xdr": "develop",
-    "xdr-js-serialize": "develop"
+    "mazzaroth-js": "^0.2.0",
+    "mazzaroth-xdr": "^0.2.2",
+    "xdr-js-serialize": "^0.2.0"
   }
 }
