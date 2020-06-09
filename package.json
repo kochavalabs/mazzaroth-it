@@ -1,6 +1,6 @@
 {
   "name": "mazzaroth-it",
-  "version": "0.2.3",
+  "version": "0.2.0",
   "description": "Tool that helps with integration testing of mazzaroth contracts.",
   "main": "dist/main.js",
   "files": [
