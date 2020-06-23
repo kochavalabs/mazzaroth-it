@@ -14,7 +14,7 @@
     "cli": "npm run build && node ./dist/main.js",
     "clid": "npm run build && env DEBUG='mazzaroth*' node ./dist/main.js",
     "test": "npm run cli test",
-    "lint": "./node_modules/.bin/eslint ."
+    "lint": "./node_modules/.bin/eslint . && ./node_modules/markdownlint-cli/markdownlint.js README.md"
   },
   "repository": {
     "type": "git",
