@@ -119,6 +119,7 @@ async function runTest (config) {
         }
       }
 
+      await sleep(300)
       const owner = config['owner'] || defaultSender
       const client = new NodeClient(host, owner)
       const testSet = config['test-sets'][setName]
