@@ -94,7 +94,8 @@ async function runTest (config) {
   for (const setName in testSets) {
     let testOutput = ''
     let killed = false
-    const child = execFile(config['mazzaroth'], ['start', 'standalone', '--mem_kv'], (out, stdout, stderr) => {
+    // docker run -p 8081:8081 kochavalabs/mazzaroth start standalone
+    const child = execFile('docker', ['run', '-p', '8081:8081', 'kochavalabs/mazzaroth', 'start', 'standalone'], (out, stdout, stderr) => {
       console.log(stdout)
     })
     let functionName = ''
