@@ -98,9 +98,9 @@ async function runTest (config) {
     let testOutput = ''
     let killed = false
     // docker run -p 8081:8081 kochavalabs/mazzaroth start standalone
-    const result = await runCmd('docker run -d -p 8081:8081 kochavalabs/mazzaroth start standalone')
-    const containerID = result.stdout
-    console.log(`Container started: ${containerID}`)
+    const child = execFile('docker', ['run', '-p', '8081:8081', 'kochavalabs/mazzaroth', 'start', 'standalone'], (out, stdout, stderr) => {
+      console.log(stdout)
+    })
     let functionName = ''
     try {
       const configAction = {
