@@ -1,11 +1,14 @@
 // import path from 'path'
 import { NodeClient, ContractClient } from 'mazzaroth-js'
+import util from 'util'
 import program from 'commander'
 import fs from 'fs'
-import { execFile } from 'child_process'
+import { exec } from 'child_process'
 import path from 'path'
 import assert from 'assert'
 require('app-module-path').addPath(path.resolve(`${__dirname}/../node_modules`))
+
+const runCmd = util.promisify(exec)
 
 const defaultChannel = '0'.repeat(64)
 const defaultSender = '0'.repeat(64)
@@ -97,9 +100,9 @@ async function runTest (config) {
     let testOutput = ''
     let killed = false
     // docker run -p 8081:8081 kochavalabs/mazzaroth start standalone
-    const child = execFile('docker', ['run', '-p', '8081:8081', 'kochavalabs/mazzaroth', 'start', 'standalone'], (out, stdout, stderr) => {
-      console.log(stdout)
-    })
+    const result = await runCmd('docker run -d -p 8081:8081 kochavalabs/mazzaroth start standalone')
+    const containerID = result.stdout
+    console.log(`Container started: ${containerID}`)
     let functionName = ''
     try {
       const configAction = {
@@ -150,12 +153,12 @@ async function runTest (config) {
       testOutput += `   Fail: ${functionName} \n\n`
       console.log(testOutput)
       console.log(e)
-      child.kill('SIGINT')
+      await runCmd(`docker kill ${containerID}`)
       killed = true
     }
     if (!killed) {
       console.log(testOutput)
-      child.kill('SIGINT')
+      await runCmd(`docker kill ${containerID}`)
     }
   }
 }
