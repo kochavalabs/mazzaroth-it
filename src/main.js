@@ -73,7 +73,7 @@ async function runTest (config) {
   const host = defaultAddr || config['node-addr']
   const testSets = config['test-sets']
   const warmupMs = config['warmup-ms'] || 1000
-  const deployMs = config['deploy-ms'] || 3000
+  const deployMs = config['deploy-ms'] || 300
   let xdrTypes = {}
   if (config['xdr-types']) {
     xdrTypes = require(path.resolve(config['xdr-types']))
@@ -122,12 +122,14 @@ async function runTest (config) {
         }
       }
 
-      await sleep(300)
+      await sleep(warmupMs)
       const owner = config['owner'] || defaultSender
       const client = new NodeClient(host, owner)
       const testSet = config['test-sets'][setName]
-      await client.transactionForReceipt(configAction, null, deployMs)
-      await client.transactionForReceipt(action, null, deployMs)
+      await client.transactionSubmit(configAction)
+      await sleep(deployMs)
+      await client.transactionSubmit(action)
+      await sleep(deployMs)
       testOutput += `Running test: ${setName} \n`
       for (const testIndex in testSet) {
         const test = testSet[testIndex]
