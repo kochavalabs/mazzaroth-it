@@ -79,9 +79,9 @@ ls tests
 # basic-tests.json   advanced-tests.json
 
 # You can give a specific configuration
-mazzaroth it test --config tests/basic-tests.json
+mazzaroth-it test --config tests/basic-tests.json
 
 # Or you can give a directory and mazzaroth-it will run all the configs under
 # the directory.
-mazzaroth it test --config tests/
+mazzaroth-it test --config tests/
 ```
