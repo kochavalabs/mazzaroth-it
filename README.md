@@ -61,14 +61,14 @@ config)
 | warmup-ms | Time to wait in ms after starting the docker standalone node to make sure it is ready to accept requests. Default: 1000|
 | deploy-ms | Time to wait in ms between sending config and deploy transactions. Default: 300 |
 | abi | Contract abi.json. Can be of type file (specify a json file) or config where you put the raw abi in the config value |
-| channel-id | The channel ID as 64 byte hex string. Default: "0".repeat(64) |
+| channel-id | The channel ID as 64 character hex string. Default: "0".repeat(64) |
 | contract | Path to the contract wasm file. |
 | node-addr | Web address for the mazzaroth node. Default: localhost:8081 |
 | owner | Name of the owner to use for the config and contract update transactions. Default: "0".repeat(64) |
 | test-sets | A series of named test sets to be run, each test set starts with a fresh mazzaroth node with no state and runs the specified transactions. |
 | test-set.args | Arguments to be sent to the function. Translated directly to transaction parameters |
 | test-set.function_name | Name of the contract function to call. |
-| test-set.sender | Account to send the transaction as, 64 byte hex string. Default: "0".repeat(64) |
+| test-set.sender | Account to send the transaction as, 64 character hex string. Default: "0".repeat(64) |
 | test-set.result | Expected result from the function call, will be asserted and fail if not equal. |
 | xdr-types | Path to the XDR type js file if any custom types are being used. |
 
