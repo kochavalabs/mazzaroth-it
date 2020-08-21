@@ -41,7 +41,7 @@ Examples:
 testCmd.description(testDesc)
   .option('-c --config <s>',
     `Web address of the host node default: ${defaultConfig}`)
-  .option('-s --skip_docker <boolean>',
+  .option('-n --skip_docker',
     `Whether to skip docker startup before running the tests.`)
 
 testCmd.action(async function (options) {
