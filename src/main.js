@@ -41,7 +41,7 @@ Examples:
 testCmd.description(testDesc)
   .option('-c --config <s>',
     `Web address of the host node default: ${defaultConfig}`)
-  .option('-n --skip_docker',
+  .option('-s --skip_docker <boolean>',
     `Whether to skip docker startup before running the tests.`)
 
 testCmd.action(async function (options) {
@@ -101,10 +101,13 @@ async function runTest (config, skipDocker) {
   for (const setName in testSets) {
     let testOutput = ''
     let killed = false
+    let containerID = ''
+    if (!skipDocker) {
     // docker run -p 8081:8081 kochavalabs/mazzaroth start standalone
-    const result = await runCmd('docker run -d -p 8081:8081 kochavalabs/mazzaroth start standalone')
-    const containerID = result.stdout
-    console.log(`Container started: ${containerID}`)
+      const result = await runCmd('docker run -d -p 8081:8081 kochavalabs/mazzaroth start standalone')
+      containerID = result.stdout
+      console.log(`Container started: ${containerID}`)
+    }
     let functionName = ''
     try {
       const configAction = {
@@ -153,12 +156,16 @@ async function runTest (config, skipDocker) {
       testOutput += `   Fail: ${functionName} \n\n`
       console.log(testOutput)
       console.log(e)
-      await runCmd(`docker kill ${containerID}`)
+      if (!skipDocker) {
+        await runCmd(`docker kill ${containerID}`)
+      }
       killed = true
     }
     if (!killed) {
       console.log(testOutput)
-      await runCmd(`docker kill ${containerID}`)
+      if (!skipDocker) {
+        await runCmd(`docker kill ${containerID}`)
+      }
     }
   }
 }
