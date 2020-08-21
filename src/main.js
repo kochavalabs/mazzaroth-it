@@ -41,6 +41,8 @@ Examples:
 testCmd.description(testDesc)
   .option('-c --config <s>',
     `Web address of the host node default: ${defaultConfig}`)
+  .option('-s --skip_docker <boolean>',
+    `Whether to skip docker startup before running the tests.`)
 
 testCmd.action(async function (options) {
   const configPath = options.config || defaultConfig
@@ -61,16 +63,16 @@ testCmd.action(async function (options) {
         console.log(`Running test config ${fullPath}`)
         console.log('----------------------------------')
         const config = JSON.parse(fs.readFileSync(fullPath))
-        await runTest(config)
+        await runTest(config, options.skip_docker)
       }
     })
   } else {
     const config = JSON.parse(fs.readFileSync(configPath))
-    await runTest(config)
+    await runTest(config, options.skip_docker)
   }
 })
 
-async function runTest (config) {
+async function runTest (config, skipDocker) {
   const channel = defaultChannel || config['channel-id']
   const host = defaultAddr || config['node-addr']
   const testSets = config['test-sets']
@@ -99,10 +101,13 @@ async function runTest (config) {
   for (const setName in testSets) {
     let testOutput = ''
     let killed = false
+    let containerID = ''
+    if (!skipDocker) {
     // docker run -p 8081:8081 kochavalabs/mazzaroth start standalone
-    const result = await runCmd('docker run -d -p 8081:8081 kochavalabs/mazzaroth start standalone')
-    const containerID = result.stdout
-    console.log(`Container started: ${containerID}`)
+      const result = await runCmd('docker run -d -p 8081:8081 kochavalabs/mazzaroth start standalone')
+      containerID = result.stdout
+      console.log(`Container started: ${containerID}`)
+    }
     let functionName = ''
     try {
       const configAction = {
@@ -151,12 +156,16 @@ async function runTest (config) {
       testOutput += `   Fail: ${functionName} \n\n`
       console.log(testOutput)
       console.log(e)
-      await runCmd(`docker kill ${containerID}`)
+      if (!skipDocker) {
+        await runCmd(`docker kill ${containerID}`)
+      }
       killed = true
     }
     if (!killed) {
       console.log(testOutput)
-      await runCmd(`docker kill ${containerID}`)
+      if (!skipDocker) {
+        await runCmd(`docker kill ${containerID}`)
+      }
     }
   }
 }
