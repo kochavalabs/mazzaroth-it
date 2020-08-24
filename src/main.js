@@ -78,6 +78,7 @@ async function runTest (config, skipDocker) {
   const testSets = config['test-sets']
   const warmupMs = config['warmup-ms'] || 1000
   const deployMs = config['deploy-ms'] || 3000
+  const transactionMs = config['transaction-ms'] || 3000
   let xdrTypes = {}
   if (config['xdr-types']) {
     xdrTypes = require(path.resolve(config['xdr-types']))
@@ -141,7 +142,7 @@ async function runTest (config, skipDocker) {
         const sender = test['sender'] || defaultSender
         const client = new NodeClient(host, sender)
         const abi = getAbi(config['abi'])
-        const contractClient = new ContractClient(abi, client, xdrTypes, channel)
+        const contractClient = new ContractClient(abi, client, xdrTypes, channel, null, transactionMs)
         functionName = test['function_name']
         const result = await contractClient[functionName](...test['args'].map(x => {
           if (typeof x === 'object' && x !== null) {
