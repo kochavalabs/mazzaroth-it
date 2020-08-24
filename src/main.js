@@ -74,7 +74,7 @@ testCmd.action(async function (options) {
 
 async function runTest (config, skipDocker) {
   const channel = defaultChannel || config['channel-id']
-  const host = defaultAddr || config['node-addr']
+  const host = config['node-addr'] || defaultAddr
   const testSets = config['test-sets']
   const warmupMs = config['warmup-ms'] || 1000
   const deployMs = config['deploy-ms'] || 3000
