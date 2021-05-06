@@ -6,6 +6,7 @@ import fs from 'fs'
 import { exec } from 'child_process'
 import path from 'path'
 import assert from 'assert'
+import { sha3_256 as sha3256 } from 'js-sha3'
 require('app-module-path').addPath(path.resolve(`${__dirname}/../node_modules`))
 
 const runCmd = util.promisify(exec)
@@ -92,7 +93,8 @@ async function runTest (config, skipDocker) {
       value: {
         enum: 1,
         value: {
-          contract: wasmFile.toString('base64'),
+          contractBytes: wasmFile.toString('base64'),
+          contractHash: sha3256.create().update(wasmFile.buffer).hex(),
           version: '0.1'
         }
       }
@@ -119,9 +121,6 @@ async function runTest (config, skipDocker) {
           value: {
             enum: 2,
             value: {
-              channelID: '0'.repeat(64),
-              contractHash: '0'.repeat(64),
-              version: '',
               owner: defaultOwner,
               channelName: '',
               admins: []
