@@ -80,6 +80,8 @@ async function runTest (config, skipDocker) {
   const warmupMs = config['warmup-ms'] || 1000
   const deployMs = config['deploy-ms'] || 3000
   const transactionMs = config['transaction-ms'] || 3000
+  const maxBlockExpirations = 5
+  const abi = getAbi(config['abi'])
   let xdrTypes = {}
   if (config['xdr-types']) {
     xdrTypes = require(path.resolve(config['xdr-types']))
@@ -88,12 +90,14 @@ async function runTest (config, skipDocker) {
   const action = {
     channelID: config.channel_id || defaultChannel,
     nonce: '1',
+    blockExpirationNumber: '5',
     category: {
       enum: 2,
       value: {
         enum: 1,
         value: {
           contractBytes: wasmFile.toString('base64'),
+          abi: abi,
           contractHash: sha3256.create().update(wasmFile.buffer).hex(),
           version: '0.1'
         }
@@ -116,13 +120,13 @@ async function runTest (config, skipDocker) {
       const configAction = {
         channelID: config.channel_id || defaultChannel,
         nonce: '0',
+        blockExpirationNumber: '5',
         category: {
           enum: 2,
           value: {
             enum: 2,
             value: {
               owner: defaultOwner,
-              channelName: '',
               admins: []
             }
           }
@@ -140,10 +144,9 @@ async function runTest (config, skipDocker) {
         const test = testSet[testIndex]
         const sender = test['sender'] || defaultSender
         const client = new NodeClient(host, sender)
-        const abi = getAbi(config['abi'])
         const contractClient = new ContractClient(abi, client, xdrTypes, channel, null, transactionMs)
         functionName = test['function_name']
-        const result = await contractClient[functionName](...test['args'].map(x => {
+        const result = await contractClient[functionName](maxBlockExpirations, ...test['args'].map(x => {
           if (typeof x === 'object' && x !== null) {
             return JSON.stringify(x)
           }
