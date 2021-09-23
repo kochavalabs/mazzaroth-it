@@ -92,10 +92,10 @@ async function runTest (config, skipDocker) {
     nonce: '1',
     blockExpirationNumber: '5',
     category: {
-      enum: 2,
-      value: {
-        enum: 1,
-        value: {
+      type: 2,
+      data: {
+        type: 1,
+        data: {
           contractBytes: wasmFile.toString('base64'),
           abi: abi,
           contractHash: sha3256.create().update(wasmFile.buffer).hex(),
@@ -122,10 +122,10 @@ async function runTest (config, skipDocker) {
         nonce: '0',
         blockExpirationNumber: '5',
         category: {
-          enum: 2,
-          value: {
-            enum: 2,
-            value: {
+          type: 2,
+          data: {
+            type: 2,
+            data: {
               owner: defaultOwner,
               admins: []
             }
