@@ -1,3 +1,7 @@
+# Deprecated
+
+Mazzaroth-it has been archived.  For integration testing with Mazzaroth use [m8](https://github.com/kochavalabs/m8).
+
 # Mazzaroth-it
 
 [![CircleCI](https://circleci.com/gh/kochavalabs/mazzaroth-it.svg?style=svg)](https://circleci.com/gh/kochavalabs/mazzaroth-it)
